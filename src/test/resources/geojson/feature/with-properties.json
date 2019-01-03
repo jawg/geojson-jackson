@@ -1,0 +1,14 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [100.0, 0.0]
+  },
+  "properties": {
+    "p1": "hello",
+    "p2": 3,
+    "p3": {
+      "q1": "world"
+    }
+  }
+}
