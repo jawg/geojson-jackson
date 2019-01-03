@@ -8,7 +8,7 @@ plugins {
 description = "GeoJSON for Jackson"
 
 group = "io.jawg.geojson"
-version = "1.0.0"
+version = "1.1.0-SNAPSHOT"
 
 tasks {
   compileKotlin {
