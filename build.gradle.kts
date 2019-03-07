@@ -2,7 +2,7 @@ plugins {
   maven
   `maven-publish`
   signing
-  kotlin("jvm") version "1.3.11"
+  kotlin("jvm") version "1.3.21"
 }
 
 description = "GeoJSON for Jackson"
@@ -21,12 +21,12 @@ tasks {
 
 task<Jar>("sourcesJar") {
   from(sourceSets.main.get().allJava)
-  classifier = "sources"
+  archiveClassifier.set("sources")
 }
 
 task<Jar>("javadocJar") {
   from(tasks.javadoc)
-  classifier = "javadoc"
+  archiveClassifier.set("javadoc")
 }
 
 tasks.javadoc {
@@ -46,8 +46,8 @@ publishing {
       val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
       url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
       credentials {
-        val ossrhUsername: String by project
-        val ossrhPassword: String by project
+        val ossrhUsername: String? by project
+        val ossrhPassword: String? by project
         username = ossrhUsername
         password = ossrhPassword
       }
@@ -94,10 +94,10 @@ signing {
 }
 
 dependencies {
-  compile(kotlin("stdlib-jdk8"))
-  compile(kotlin("reflect"))
-  compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
-  testCompile(kotlin("test"))
-  testCompile(kotlin("test-junit"))
-  testCompile("org.skyscreamer:jsonassert:1.5.0")
+  implementation(kotlin("stdlib-jdk8"))
+  implementation(kotlin("reflect"))
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
+  testImplementation(kotlin("test"))
+  testImplementation(kotlin("test-junit"))
+  testImplementation("org.skyscreamer:jsonassert:1.5.0")
 }
