@@ -2,6 +2,8 @@ package io.jawg.geojson
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.jawg.geojson.utils.GeoJsonFactory
+import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.*
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
