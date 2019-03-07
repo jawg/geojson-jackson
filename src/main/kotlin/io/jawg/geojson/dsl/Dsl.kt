@@ -1,18 +1,8 @@
 package io.jawg.geojson.dsl
 
-import io.jawg.geojson.Feature
-import io.jawg.geojson.FeatureCollection
-import io.jawg.geojson.Geometry
-import io.jawg.geojson.GeometryCollection
-import io.jawg.geojson.LineString
-import io.jawg.geojson.LinearRing
-import io.jawg.geojson.MultiLineString
-import io.jawg.geojson.MultiPoint
-import io.jawg.geojson.MultiPolygon
-import io.jawg.geojson.Point
-import io.jawg.geojson.PointCoordinates
-import io.jawg.geojson.Polygon
-import io.jawg.geojson.Position
+import io.jawg.geojson.*
+import kotlin.math.max
+import kotlin.math.min
 
 internal interface Builder<T> {
 
@@ -43,22 +33,58 @@ class PositionBuilder : Builder<PointCoordinates> {
 
 }
 
-class PointBuilder : Builder<Point> {
+class PointBuilder : BuilderWithBBox<Point>() {
 
   var lat: Double = 0.0
   var lng: Double = 0.0
   var alt: Double? = null
 
+  override fun computeBBox(): BBox = BBox(west = lng, east = lng, south = lat, north = lat)
   override fun build(): Point {
     val coordinates = PointCoordinates(lng, lat, alt)
-    return Point(coordinates, null)
+    return Point(coordinates, bbox)
   }
 }
 
 abstract class BuilderWithBBox<T> : Builder<T> {
 
-  var bbox: List<Double>? = null
+  private var _bbox: BBox? = null
+  var bbox: BBox?
+    get() = when {
+      _bbox != null -> _bbox
+      bboxShouldBeComputed -> computeBBox()
+      else -> null
+    }
+    set(value) {
+      _bbox = value
+    }
 
+  private var bboxShouldBeComputed = false
+
+  fun bbox(init: BBoxBuilder.() -> Unit) {
+    _bbox = BBoxBuilder().apply(init).build()
+  }
+
+  fun bbox() {
+    bboxShouldBeComputed = true
+  }
+
+  abstract fun computeBBox(): BBox
+}
+
+class BBoxBuilder : Builder<BBox> {
+  var west: Double? = null
+  var east: Double? = null
+  var north: Double? = null
+  var south: Double? = null
+
+
+  override fun build(): BBox = BBox(
+    west = west ?: throw IllegalArgumentException("west must be specified"),
+    east = east ?: throw IllegalArgumentException("east must be specified"),
+    north = north ?: throw IllegalArgumentException("north must be specified"),
+    south = south ?: throw IllegalArgumentException("south must be specified")
+  )
 }
 
 class LineStringBuilder : BuilderWithBBox<LineString>() {
@@ -73,6 +99,7 @@ class LineStringBuilder : BuilderWithBBox<LineString>() {
     return position
   }
 
+  override fun computeBBox(): BBox = coordinates.toBBox()
   override fun build(): LineString {
     return LineString(coordinates, bbox)
   }
@@ -105,6 +132,7 @@ class PolygonBuilder : BuilderWithBBox<Polygon>() {
     return ring
   }
 
+  override fun computeBBox(): BBox = rings.flatten().toBBox()
   override fun build(): Polygon {
     return Polygon(rings, bbox)
   }
@@ -122,6 +150,7 @@ class MultiPointBuilder : BuilderWithBBox<MultiPoint>() {
     return position
   }
 
+  override fun computeBBox(): BBox = coordinates.toBBox()
   override fun build(): MultiPoint {
     return MultiPoint(coordinates, bbox)
   }
@@ -137,6 +166,7 @@ class MultiLineStringBuilder : BuilderWithBBox<MultiLineString>() {
     return lineString
   }
 
+  override fun computeBBox(): BBox = lineStrings.flatMap { it.getAllCoordinates() }.toBBox()
   override fun build(): MultiLineString {
     return MultiLineString(lineStrings.mapNotNull(LineString::coordinates), bbox)
   }
@@ -152,6 +182,7 @@ class MultiPolygonBuilder : BuilderWithBBox<MultiPolygon>() {
     return polygon
   }
 
+  override fun computeBBox(): BBox = polygons.flatMap { it.getAllCoordinates() }.toBBox()
   override fun build(): MultiPolygon {
     return MultiPolygon(polygons.mapNotNull(Polygon::coordinates), bbox)
   }
@@ -197,17 +228,17 @@ class GeometryCollectionBuilder : BuilderWithBBox<GeometryCollection>() {
     return multiPolygon
   }
 
+  override fun computeBBox(): BBox = geometries.flatMap { it.getAllCoordinates() }.toBBox()
   override fun build(): GeometryCollection {
     return GeometryCollection(geometries, bbox)
   }
 }
 
-class FeatureBuilder : Builder<Feature> {
+class FeatureBuilder : BuilderWithBBox<Feature>() {
 
   var id: String? = null
   private lateinit var geometry: Geometry<*>
-  private lateinit var properties: Map<String, Any>
-  var bbox: List<Double>? = null
+  private var properties: Map<String, Any>? = null
 
   fun point(init: PointBuilder.() -> Unit): Point {
     val point = io.jawg.geojson.dsl.point(init)
@@ -254,10 +285,11 @@ class FeatureBuilder : Builder<Feature> {
   fun properties(init: PropertiesBuilder.() -> Unit): Map<String, Any> {
     val builder = PropertiesBuilder()
     builder.init()
-    properties = builder.build()
-    return properties
+    return builder.build()
+      .also { properties = it }
   }
 
+  override fun computeBBox(): BBox = geometry.getAllCoordinates().toBBox()
   override fun build(): Feature {
     return Feature(geometry, properties, id, bbox)
   }
@@ -273,6 +305,7 @@ class FeatureCollectionBuilder : BuilderWithBBox<FeatureCollection>() {
     return feature
   }
 
+  override fun computeBBox(): BBox = features.flatMap { it.geometry?.getAllCoordinates().orEmpty() }.toBBox()
   override fun build(): FeatureCollection {
     return FeatureCollection(features, bbox)
   }
@@ -331,4 +364,27 @@ fun featureCollection(init: FeatureCollectionBuilder.() -> Unit): FeatureCollect
   val builder = FeatureCollectionBuilder()
   builder.init()
   return builder.build()
+}
+
+fun List<Position>.toBBox(): BBox {
+  val positions = this
+  require(positions.isNotEmpty()) { "positions should be non empty" }
+
+  var minLat = Double.POSITIVE_INFINITY
+  var maxLat = Double.NEGATIVE_INFINITY
+  var minLng = Double.POSITIVE_INFINITY
+  var maxLng = Double.NEGATIVE_INFINITY
+  positions.forEach { position ->
+    minLat = min(minLat, position.lat)
+    maxLat = max(maxLat, position.lat)
+    minLng = min(minLng, position.lng)
+    maxLng = max(maxLng, position.lng)
+  }
+
+  return BBox(
+    west = minLng,
+    east = maxLng,
+    north = maxLat,
+    south = minLat
+  )
 }

@@ -1,4 +1,4 @@
-package io.jawg.geojson
+package io.jawg.geojson.utils
 
 internal object GeoJsonLoader {
 

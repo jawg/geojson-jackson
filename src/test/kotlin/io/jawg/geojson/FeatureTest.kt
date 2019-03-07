@@ -2,6 +2,8 @@ package io.jawg.geojson
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.jawg.geojson.utils.GeoJsonFactory
+import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -54,6 +56,30 @@ class FeatureTest {
     val geojson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(feature)
 
     val expected = GeoJsonLoader.loadFeature("with-properties.json")
+
+    JSONAssert.assertEquals(expected, geojson, true)
+  }
+
+  @Test
+  fun `it should deserialize to Feature with bbox`() {
+    val geojson = GeoJsonLoader.loadFeature("with-bbox.json")
+
+    val feature = mapper.readValue(geojson, GeoJsonObject::class.java) as Feature
+
+    val bbox = GeoJsonFactory.feature(id = false, properties = false, bbox = true).bbox
+
+    assertNull(feature.id)
+    assertEquals(bbox, feature.bbox)
+    assertTrue(feature.geometry is Point)
+  }
+
+  @Test
+  fun `it should serialize to feature with bbox`() {
+    val feature = GeoJsonFactory.feature(id = false, properties = false, bbox = true)
+
+    val geojson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(feature)
+
+    val expected = GeoJsonLoader.loadFeature("with-bbox.json")
 
     JSONAssert.assertEquals(expected, geojson, true)
   }
