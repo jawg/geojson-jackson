@@ -2,5 +2,5 @@ package io.jawg.geojson
 
 class FeatureCollection(
     val features: List<Feature>,
-    val bbox: List<Double>? = null
+    val bbox: BBox? = null
 ) : GeoJsonObject("FeatureCollection")

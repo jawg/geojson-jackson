@@ -1,4 +1,7 @@
-package io.jawg.geojson
+package io.jawg.geojson.utils
+
+import io.jawg.geojson.*
+import io.jawg.geojson.dsl.toBBox
 
 object GeoJsonFactory {
 
@@ -29,7 +32,7 @@ object GeoJsonFactory {
     return GeometryCollection(listOf(point, lineString))
   }
 
-  fun feature(id: Boolean = false, properties: Boolean = false): Feature {
+  fun feature(id: Boolean = false, properties: Boolean = false, bbox: Boolean = false): Feature {
     val featureId = if (id) "p1" else null
     val point = point()
     val featureProperties = if (properties) {
@@ -41,7 +44,8 @@ object GeoJsonFactory {
     } else {
       emptyMap()
     }
-    return Feature(point, featureProperties, featureId)
+    val featureBbox = if (bbox) point.getAllCoordinates().toBBox() else null
+    return Feature(point, featureProperties, featureId, featureBbox)
   }
 
 }

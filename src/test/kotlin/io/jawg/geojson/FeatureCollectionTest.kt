@@ -2,7 +2,9 @@ package io.jawg.geojson
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import io.jawg.geojson.dsl.toBBox
 import org.junit.Test
+import org.skyscreamer.jsonassert.JSONAssert
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -25,8 +27,8 @@ class FeatureCollectionTest {
             ),
             id = "multiLineString1")
     )
-
-    val featureCollection = FeatureCollection(features)
+    val bbox = features.flatMap { it.geometry?.getAllCoordinates().orEmpty() }.toBBox()
+    val featureCollection = FeatureCollection(features, bbox = bbox)
 
     val geojson = mapper.writeValueAsString(featureCollection)
 
@@ -64,11 +66,12 @@ class FeatureCollectionTest {
             "type": "Feature"
           }
         ],
+        "bbox": [0.0, 1.0, 2.0, 20.0],
         "type": "FeatureCollection"
       }
-    """.replace("\\s".toRegex(), "")
+    """
 
-    assertEquals(expected, geojson)
+    JSONAssert.assertEquals(expected, geojson, true)
   }
 
   @Test
@@ -107,6 +110,7 @@ class FeatureCollectionTest {
             "type": "Feature"
           }
         ],
+        "bbox": [0.0, 1.0, 2.0, 20.0],
         "type": "FeatureCollection"
       }
     """
@@ -125,10 +129,12 @@ class FeatureCollectionTest {
             id = "multiLineString1")
     )
 
-    val expected = FeatureCollection(features)
+    val bbox = features.flatMap { it.geometry?.getAllCoordinates().orEmpty() }.toBBox()
+    val expected = FeatureCollection(features, bbox)
 
     assertTrue(featureCollection is FeatureCollection)
     assertEquals(expected.features.size, featureCollection.features.size)
+    assertEquals(bbox, featureCollection.bbox)
   }
 
 }

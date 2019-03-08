@@ -9,5 +9,11 @@ Serialize / Deserialize GeoJSON with Jackson
 
 Add the dependency in your ```dependencies { ... }```:
 ```kotlin
-compile("io.jawg.geojson:geojson-jackson:1.0.0")
+implementation("io.jawg.geojson:geojson-jackson:1.0.0")
+```
+
+## Build
+
+```bash
+./gradlew build
 ```
