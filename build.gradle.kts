@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.backend.common.onlyIf
+
 plugins {
   maven
   `maven-publish`
@@ -8,7 +10,9 @@ plugins {
 description = "GeoJSON for Jackson"
 
 group = "io.jawg.geojson"
-version = "1.1.0-SNAPSHOT"
+version = "1.1.0"
+
+val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
 
 tasks {
   compileKotlin {
@@ -44,7 +48,7 @@ publishing {
     maven {
       val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
       val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-      url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl)
+      url = uri(if (isReleaseVersion) releasesRepoUrl else snapshotsRepoUrl)
       credentials {
         val ossrhUsername: String? by project
         val ossrhPassword: String? by project
@@ -90,7 +94,9 @@ publishing {
 }
 
 signing {
-  sign(publishing.publications["mavenJava"])
+  onlyIf({ isReleaseVersion }) {
+    sign(publishing.publications["mavenJava"])
+  }
 }
 
 dependencies {
