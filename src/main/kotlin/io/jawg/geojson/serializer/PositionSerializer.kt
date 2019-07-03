@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.SerializerProvider
 import io.jawg.geojson.Position
+import java.text.DecimalFormat
 
 internal class PositionDeserializer : JsonDeserializer<Position>() {
 
@@ -58,12 +59,23 @@ internal class PositionDeserializer : JsonDeserializer<Position>() {
 
 internal class PositionSerializer : JsonSerializer<Position>() {
 
+  private val latLngFormatter = DecimalFormat().apply {
+    // Round to centimeter precision which is around 7 digit for lat lng, this is what OSM does
+    maximumFractionDigits = 7
+    minimumFractionDigits = 1
+  }
+  private val altFormatter = DecimalFormat().apply {
+    maximumFractionDigits = 2
+    minimumFractionDigits = 1
+  }
+
+
   override fun serialize(value: Position, gen: JsonGenerator, serializers: SerializerProvider) {
     gen.writeStartArray()
-    gen.writeNumber(value.lng)
-    gen.writeNumber(value.lat)
+    gen.writeRawValue(latLngFormatter.format(value.lng))
+    gen.writeRawValue(latLngFormatter.format(value.lat))
     if (value.alt != null) {
-      gen.writeNumber(value.alt)
+      gen.writeRawValue(altFormatter.format(value.alt))
     }
     gen.writeEndArray()
   }
