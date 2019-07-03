@@ -43,4 +43,21 @@ class PositionSerializerTest {
     assertEquals(expected, geojson)
   }
 
+  @Test
+  fun `it should round to 7th decimal for lat and lng or 2nd decimal for alt`() {
+      val position = Position(
+          lng = 1.123456789,
+          lat = 2.123450009,
+          alt = 3.123456
+      )
+
+      val geojson = mapper.writeValueAsString(position)
+
+      val expected = """
+        [1.1234568, 2.12345, 3.12]
+      """.replace("\\s".toRegex(), "")
+
+      assertEquals(expected, geojson)
+  }
+
 }
