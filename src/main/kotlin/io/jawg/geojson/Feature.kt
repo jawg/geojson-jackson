@@ -2,7 +2,7 @@ package io.jawg.geojson
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
-class Feature(
+data class Feature(
     @JsonInclude(JsonInclude.Include.ALWAYS)
     val geometry: Geometry<*>?,
     @JsonInclude(JsonInclude.Include.ALWAYS)

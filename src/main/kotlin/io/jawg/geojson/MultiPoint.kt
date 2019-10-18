@@ -1,9 +1,10 @@
 package io.jawg.geojson
 
-class MultiPoint(
-    coordinates: List<PointCoordinates>,
-    bbox: BBox? = null
-) : Geometry<List<PointCoordinates>>("MultiPoint", coordinates, bbox) {
+data class MultiPoint(
+    override val coordinates: List<PointCoordinates>,
+    override val bbox: BBox? = null
+) : Geometry<List<PointCoordinates>>("MultiPoint") {
 
-  override fun getAllCoordinates(): List<Position> = coordinates.orEmpty()
+  override fun getAllCoordinates(): List<Position> = coordinates
+
 }

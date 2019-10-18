@@ -18,7 +18,7 @@ class MultiLineStringTest {
 
     val multiLineString: MultiLineString = mapper.readValue(geojson, GeoJsonObject::class.java) as MultiLineString
 
-    assertEquals(2, multiLineString.coordinates!!.size)
+    assertEquals(2, multiLineString.coordinates.size)
   }
 
   @Test

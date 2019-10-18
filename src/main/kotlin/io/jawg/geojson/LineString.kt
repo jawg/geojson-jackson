@@ -1,9 +1,9 @@
 package io.jawg.geojson
 
-class LineString(
-    coordinates: LineStringCoordinates,
-    bbox: BBox? = null
-) : Geometry<LineStringCoordinates>("LineString", coordinates, bbox) {
+data class LineString(
+    override val coordinates: LineStringCoordinates,
+    override val bbox: BBox? = null
+) : Geometry<LineStringCoordinates>("LineString") {
 
   init {
     LineStringValidator.validate(coordinates)

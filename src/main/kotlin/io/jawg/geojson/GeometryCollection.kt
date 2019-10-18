@@ -1,8 +1,12 @@
 package io.jawg.geojson
 
-class GeometryCollection(
+data class GeometryCollection(
     val geometries: List<Geometry<*>>,
-    bbox: BBox? = null
-) : Geometry<Nothing>("GeometryCollection", null, bbox) {
+    override val bbox: BBox? = null
+) : Geometry<Nothing>("GeometryCollection") {
+
+  override val coordinates = null
+
   override fun getAllCoordinates(): List<Position> = geometries.flatMap { it.getAllCoordinates() }
+
 }

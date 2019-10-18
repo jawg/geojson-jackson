@@ -17,8 +17,8 @@ class PolygonTest {
     val geojson = GeoJsonLoader.loadPolygon("no-holes.json")
 
     val polygon: Polygon = mapper.readValue(geojson, GeoJsonObject::class.java) as Polygon
-    assertEquals(1, polygon.coordinates!!.size)
-    assertEquals(5, polygon.coordinates!!.first().size)
+    assertEquals(1, polygon.coordinates.size)
+    assertEquals(5, polygon.coordinates.first().size)
   }
 
   @Test
@@ -26,9 +26,9 @@ class PolygonTest {
     val geojson = GeoJsonLoader.loadPolygon("with-holes.json")
 
     val polygon: Polygon = mapper.readValue(geojson, GeoJsonObject::class.java) as Polygon
-    assertEquals(2, polygon.coordinates!!.size)
-    assertEquals(5, polygon.coordinates!!.first().size)
-    assertEquals(5, polygon.coordinates!!.last().size)
+    assertEquals(2, polygon.coordinates.size)
+    assertEquals(5, polygon.coordinates.first().size)
+    assertEquals(5, polygon.coordinates.last().size)
   }
 
   @Test
