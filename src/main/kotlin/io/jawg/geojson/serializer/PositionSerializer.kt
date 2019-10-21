@@ -57,18 +57,28 @@ internal class PositionDeserializer : JsonDeserializer<Position>() {
   }
 }
 
-internal class PositionSerializer : JsonSerializer<Position>() {
+object PositionSerializer : JsonSerializer<Position>() {
+
+  object Decimals {
+    @JvmStatic
+    var latlng: Int
+      get() = latLngFormatter.maximumFractionDigits
+      set(value) { latLngFormatter.maximumFractionDigits = value }
+
+    @JvmStatic
+    var altitude: Int
+      get() = altFormatter.maximumFractionDigits
+      set(value) { altFormatter.maximumFractionDigits = value }
+  }
 
   private val latLngFormatter = DecimalFormat().apply {
-    // Round to centimeter precision which is around 7 digit for lat lng, this is what OSM does
-    maximumFractionDigits = 7
+    maximumFractionDigits = Int.MAX_VALUE
     minimumFractionDigits = 1
   }
   private val altFormatter = DecimalFormat().apply {
-    maximumFractionDigits = 2
+    maximumFractionDigits = Int.MAX_VALUE
     minimumFractionDigits = 1
   }
-
 
   override fun serialize(value: Position, gen: JsonGenerator, serializers: SerializerProvider) {
     gen.writeStartArray()
