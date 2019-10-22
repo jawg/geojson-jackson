@@ -17,14 +17,6 @@ For SNAPSHOT versions add the repository in tour ```repositories { ... }```:
 maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 ```
 
-## Control the decimal places
-You can control the decimal places of the serialized latitudes, longitudes and altitudes:
-
-```kotlin
-PositionSerializer.Decimals.latlng = 7
-PositionSerializer.Decimals.altitude = 2
-```
-
 ## Build
 
 ```bash

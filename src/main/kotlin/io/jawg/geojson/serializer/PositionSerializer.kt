@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.SerializerProvider
 import io.jawg.geojson.Position
-import java.text.DecimalFormat
 
 internal class PositionDeserializer : JsonDeserializer<Position>() {
 
@@ -57,35 +56,14 @@ internal class PositionDeserializer : JsonDeserializer<Position>() {
   }
 }
 
-object PositionSerializer : JsonSerializer<Position>() {
-
-  object Decimals {
-    @JvmStatic
-    var latlng: Int
-      get() = latLngFormatter.maximumFractionDigits
-      set(value) { latLngFormatter.maximumFractionDigits = value }
-
-    @JvmStatic
-    var altitude: Int
-      get() = altFormatter.maximumFractionDigits
-      set(value) { altFormatter.maximumFractionDigits = value }
-  }
-
-  private val latLngFormatter = DecimalFormat().apply {
-    maximumFractionDigits = Int.MAX_VALUE
-    minimumFractionDigits = 1
-  }
-  private val altFormatter = DecimalFormat().apply {
-    maximumFractionDigits = Int.MAX_VALUE
-    minimumFractionDigits = 1
-  }
+internal class PositionSerializer : JsonSerializer<Position>() {
 
   override fun serialize(value: Position, gen: JsonGenerator, serializers: SerializerProvider) {
     gen.writeStartArray()
-    gen.writeRawValue(latLngFormatter.format(value.lng))
-    gen.writeRawValue(latLngFormatter.format(value.lat))
+    gen.writeNumber(value.lng)
+    gen.writeNumber(value.lat)
     if (value.alt != null) {
-      gen.writeRawValue(altFormatter.format(value.alt))
+      gen.writeNumber(value.alt)
     }
     gen.writeEndArray()
   }

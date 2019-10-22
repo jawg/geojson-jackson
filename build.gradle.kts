@@ -14,6 +14,11 @@ version = "1.2.0-SNAPSHOT"
 
 val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
 
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
 tasks {
   compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -24,7 +29,7 @@ tasks {
 }
 
 task<Jar>("sourcesJar") {
-  from(sourceSets.main.get().allJava)
+  from(sourceSets.main.get().allSource)
   archiveClassifier.set("sources")
 }
 
