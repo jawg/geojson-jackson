@@ -1,9 +1,10 @@
 package io.jawg.geojson
 
-class Point(
-    coordinates: PointCoordinates,
-    bbox: BBox? = null
-) : Geometry<Position>("Point", coordinates, bbox) {
+data class Point(
+    override val coordinates: PointCoordinates,
+    override val bbox: BBox? = null
+) : Geometry<Position>("Point") {
 
-  override fun getAllCoordinates(): List<Position> = coordinates?.let { listOf(it) } ?: emptyList()
+  override fun getAllCoordinates(): List<Position> = listOf(coordinates)
+
 }

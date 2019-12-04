@@ -4,38 +4,39 @@ plugins {
   maven
   `maven-publish`
   signing
-  kotlin("jvm") version "1.3.21"
+  kotlin("jvm") version "1.3.61"
 }
 
 description = "GeoJSON for Jackson"
 
 group = "io.jawg.geojson"
-version = "1.1.0"
+version = "1.2.0"
 
 val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 tasks {
   compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
   }
+
   compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
   }
-}
 
-task<Jar>("sourcesJar") {
-  from(sourceSets.main.get().allJava)
-  archiveClassifier.set("sources")
-}
+  java {
+    withJavadocJar()
+    withSourcesJar()
+  }
 
-task<Jar>("javadocJar") {
-  from(tasks.javadoc)
-  archiveClassifier.set("javadoc")
-}
-
-tasks.javadoc {
-  if (JavaVersion.current().isJava9Compatible) {
-    (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
+  javadoc {
+    if (JavaVersion.current().isJava9Compatible) {
+      (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
+    }
   }
 }
 
@@ -60,8 +61,6 @@ publishing {
   publications {
     create<MavenPublication>("mavenJava") {
       from(components["java"])
-      artifact(tasks["sourcesJar"])
-      artifact(tasks["javadocJar"])
       pom {
         name.set("GeoJSON Jackson for Kotlin")
         description.set("(De)Serialization of GeoJSON with Jackson for Kotlin")
@@ -102,7 +101,7 @@ signing {
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation(kotlin("reflect"))
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1")
   testImplementation(kotlin("test"))
   testImplementation(kotlin("test-junit"))
   testImplementation("org.skyscreamer:jsonassert:1.5.0")

@@ -8,9 +8,7 @@ internal object LineStringValidator {
    * @throws [IllegalArgumentException] if coordinates are invalid
    */
   fun validate(coordinates: LineStringCoordinates) {
-    if (coordinates.size < 2) {
-      throw IllegalArgumentException("LineString coordinates must have at least 2 positions")
-    }
+    require(coordinates.size >= 2) { "LineString coordinates must have at least 2 positions" }
   }
 
 }

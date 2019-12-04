@@ -17,7 +17,7 @@ class MultiPolygonTest {
 
     val multiPolygon = mapper.readValue(geojson, GeoJsonObject::class.java) as MultiPolygon
 
-    kotlin.test.assertEquals(2, multiPolygon.coordinates!!.size)
+    kotlin.test.assertEquals(2, multiPolygon.coordinates.size)
   }
 
   @Test

@@ -1,14 +1,14 @@
 package io.jawg.geojson.serializer
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.jawg.geojson.Position
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class PositionSerializerTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = ObjectMapper().registerKotlinModule()
 
   @Test
   fun `it should serialize to (lng, lat)`() {

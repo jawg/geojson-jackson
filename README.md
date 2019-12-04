@@ -3,13 +3,18 @@
 Serialize / Deserialize GeoJSON with Jackson
 
 ## Requirements
-* Java 11+
+* Java 8+
 
 ## Dependency
 
 Add the dependency in your ```dependencies { ... }```:
 ```kotlin
-implementation("io.jawg.geojson:geojson-jackson:1.0.0")
+implementation("io.jawg.geojson:geojson-jackson:1.2.0")
+```
+
+For SNAPSHOT versions add the repository in tour ```repositories { ... }```:
+```kotlin
+maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 ```
 
 ## Build
