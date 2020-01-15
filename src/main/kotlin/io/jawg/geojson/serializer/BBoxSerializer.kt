@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.JsonSerializer
 import com.fasterxml.jackson.databind.SerializerProvider
 import io.jawg.geojson.BBox
-import io.jawg.geojson.Position
 
 internal class BBoxDeserializer : JsonDeserializer<BBox>() {
 
@@ -41,6 +40,9 @@ internal class BBoxDeserializer : JsonDeserializer<BBox>() {
       throw IllegalStateException("north is null")
     }
 
+    // Go to the end of the array ignoring anything after the north coordinate
+    while (p.currentToken != JsonToken.END_ARRAY) { p.nextToken() }
+
     return BBox(
       west = west,
       east = east,
@@ -50,18 +52,17 @@ internal class BBoxDeserializer : JsonDeserializer<BBox>() {
   }
 
   private fun nextDouble(parser: JsonParser, ctx: DeserializationContext): Double? {
-    val token = parser.nextToken()
-    return when (token) {
+    return when (val token = parser.nextToken()) {
       JsonToken.VALUE_NUMBER_INT -> parser.longValue.toDouble()
       JsonToken.VALUE_NUMBER_FLOAT -> parser.doubleValue
       JsonToken.VALUE_STRING -> parser.valueAsDouble
       JsonToken.END_ARRAY -> null
       null -> {
-        ctx.handleUnexpectedToken(Position::class.java, token, parser, "Unexpected null token")
+        ctx.handleUnexpectedToken(BBox::class.java, token, parser, "Unexpected null token")
         null
       }
       else -> {
-        ctx.handleUnexpectedToken(Position::class.java, token, parser, "Unexpected token ${token.name}")
+        ctx.handleUnexpectedToken(BBox::class.java, token, parser, "Unexpected token ${token.name}")
         null
       }
     }

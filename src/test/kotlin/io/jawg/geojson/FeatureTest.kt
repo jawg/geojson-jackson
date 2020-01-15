@@ -1,7 +1,8 @@
 package io.jawg.geojson
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.jawg.geojson.utils.GeoJsonFactory
 import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.assertEquals
@@ -12,7 +13,7 @@ import kotlin.test.assertTrue
 
 class FeatureTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = ObjectMapper().registerKotlinModule()
 
   @Test
   fun `it should deserialize to Feature with id`() {
@@ -37,16 +38,36 @@ class FeatureTest {
   }
 
   @Test
+  fun `it should deserialize to Feature with 3 dimensions`() {
+    val geojson = GeoJsonLoader.loadFeature("with-3-dimensions.json")
+
+    val feature = mapper.readValue<Feature>(geojson)
+
+    val expected = GeoJsonFactory.feature(id = false, alt = true, properties = true)
+
+    assertEquals(expected, feature)
+  }
+
+  @Test
+  fun `it should serialize to Feature with 3 dimensions`() {
+    val feature = GeoJsonFactory.feature(id = false, alt = true, properties = true)
+
+    val geojson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(feature)
+
+    val expected = GeoJsonLoader.loadFeature("with-3-dimensions.json")
+
+    JSONAssert.assertEquals(expected, geojson, true)
+  }
+
+  @Test
   fun `it should deserialize to Feature with properties`() {
     val geojson = GeoJsonLoader.loadFeature("with-properties.json")
 
-    val feature = mapper.readValue(geojson, GeoJsonObject::class.java) as Feature
+    val feature = mapper.readValue<Feature>(geojson)
 
-    val properties = GeoJsonFactory.feature(id = false, properties = true).properties
+    val expected = GeoJsonFactory.feature(id = false, properties = true)
 
-    assertNull(feature.id)
-    assertEquals(properties, feature.properties)
-    assertTrue(feature.geometry is Point)
+    assertEquals(expected, feature)
   }
 
   @Test

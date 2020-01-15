@@ -1,4 +1,6 @@
 # 1.3.0-SNAPSHOT
+* `Feature.properties` can have null values as expected by the [RFC](https://tools.ietf.org/html/rfc7946#section-3.2)
+* 3 dimensions `coordinates` don't prevent other properties to be parsed correctly
 
 # 1.2.0 2019-12-04
 * Made `GeoJsonObject` and sub-classes data class

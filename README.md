@@ -12,7 +12,7 @@ Add the dependency in your ```dependencies { ... }```:
 implementation("io.jawg.geojson:geojson-jackson:1.3.0-SNAPSHOT")
 ```
 
-For SNAPSHOT versions add the repository in tour ```repositories { ... }```:
+For SNAPSHOT versions add the repository in your ```repositories { ... }```:
 ```kotlin
 maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
 ```

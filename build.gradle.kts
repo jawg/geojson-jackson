@@ -101,7 +101,7 @@ signing {
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation(kotlin("reflect"))
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2")
   testImplementation(kotlin("test"))
   testImplementation(kotlin("test-junit"))
   testImplementation("org.skyscreamer:jsonassert:1.5.0")

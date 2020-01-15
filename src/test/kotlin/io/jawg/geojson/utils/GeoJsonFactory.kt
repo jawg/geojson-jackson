@@ -5,8 +5,8 @@ import io.jawg.geojson.dsl.toBBox
 
 object GeoJsonFactory {
 
-  fun point(): Point {
-    val coordinates = Position(100.0, 0.0)
+  fun point(alt: Boolean): Point {
+    val coordinates = Position(100.0, 0.0, 10.0.takeIf { alt })
     return Point(coordinates)
   }
 
@@ -32,14 +32,15 @@ object GeoJsonFactory {
     return GeometryCollection(listOf(point, lineString))
   }
 
-  fun feature(id: Boolean = false, properties: Boolean = false, bbox: Boolean = false): Feature {
+  fun feature(id: Boolean = false, alt: Boolean = false, properties: Boolean = false, bbox: Boolean = false): Feature {
     val featureId = if (id) "p1" else null
-    val point = point()
+    val point = point(alt)
     val featureProperties = if (properties) {
       mapOf(
         "p1" to "hello",
         "p2" to 3,
-        "p3" to mapOf("q1" to "world")
+        "p3" to mapOf("q1" to "world"),
+        "p4" to null
       )
     } else {
       emptyMap()
