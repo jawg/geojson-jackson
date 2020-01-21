@@ -30,16 +30,18 @@ internal class PositionDeserializer : JsonDeserializer<Position>() {
 
     val alt = nextDouble(p, ctx)
 
+    // Go to the end of the array ignoring anything after the third coordinate
+    while (p.currentToken != JsonToken.END_ARRAY) { p.nextToken() }
+
     return Position(
-        lng = lng,
-        lat = lat,
-        alt = alt
+      lng = lng,
+      lat = lat,
+      alt = alt
     )
   }
 
   private fun nextDouble(parser: JsonParser, ctx: DeserializationContext): Double? {
-    val token = parser.nextToken()
-    return when (token) {
+    return when (val token = parser.nextToken()) {
       JsonToken.VALUE_NUMBER_INT -> parser.longValue.toDouble()
       JsonToken.VALUE_NUMBER_FLOAT -> parser.doubleValue
       JsonToken.VALUE_STRING -> parser.valueAsDouble

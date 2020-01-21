@@ -10,7 +10,7 @@ plugins {
 description = "GeoJSON for Jackson"
 
 group = "io.jawg.geojson"
-version = "1.2.0"
+version = "1.2.1"
 
 val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
 
@@ -101,7 +101,7 @@ signing {
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation(kotlin("reflect"))
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.1")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2")
   testImplementation(kotlin("test"))
   testImplementation(kotlin("test-junit"))
   testImplementation("org.skyscreamer:jsonassert:1.5.0")
