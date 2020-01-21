@@ -10,7 +10,7 @@ plugins {
 description = "GeoJSON for Jackson"
 
 group = "io.jawg.geojson"
-version = "1.3.0-SNAPSHOT"
+version = "1.2.1"
 
 val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
 
