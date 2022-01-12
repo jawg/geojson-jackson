@@ -6,6 +6,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class DSLTest {
+
   @Test
   fun `it should generate a bbox correctly`() {
     val featureCollection = featureCollection {
@@ -51,4 +52,5 @@ class DSLTest {
     val expectedPointBBox = BBox(west = -50.0, east = 55.5, south = -45.0, north = 48.0)
     assertEquals(expectedPointBBox, featureCollection.features.last().geometry?.bbox)
   }
+
 }

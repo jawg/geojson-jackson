@@ -1,16 +1,17 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.utils.GeoJsonFactory
 import io.jawg.geojson.utils.GeoJsonLoader
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
 
 class GeometryCollectionTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should deserialize to GeometryCollection`() {

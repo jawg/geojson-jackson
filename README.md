@@ -9,7 +9,7 @@ Serialize / Deserialize GeoJSON with Jackson
 
 Add the dependency in your ```dependencies { ... }```:
 ```kotlin
-implementation("io.jawg.geojson:geojson-jackson:1.2.1")
+implementation("io.jawg.geojson:geojson-jackson:1.2.2")
 ```
 
 For SNAPSHOT versions add the repository in your ```repositories { ... }```:

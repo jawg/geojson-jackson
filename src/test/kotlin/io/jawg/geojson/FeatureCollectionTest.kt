@@ -1,7 +1,6 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.dsl.toBBox
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
@@ -10,22 +9,23 @@ import kotlin.test.assertTrue
 
 class FeatureCollectionTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should serialize to FeatureCollection`() {
 
     val features = listOf(
-        Feature(geometry = Point(Position(0.0, 10.0)), id = "point1"),
-        Feature(geometry = Point(Position(0.0, 20.0)), id = "point2"),
-        Feature(
-            geometry = MultiLineString(
-                listOf(
-                    listOf(Position(0.0, 1.0), Position(1.0, 2.0)),
-                    listOf(Position(0.0, 1.0), Position(1.0, 2.0), Position(2.0, 3.0))
-                )
-            ),
-            id = "multiLineString1")
+      Feature(geometry = Point(Position(0.0, 10.0)), id = "point1"),
+      Feature(geometry = Point(Position(0.0, 20.0)), id = "point2"),
+      Feature(
+        geometry = MultiLineString(
+          listOf(
+            listOf(Position(0.0, 1.0), Position(1.0, 2.0)),
+            listOf(Position(0.0, 1.0), Position(1.0, 2.0), Position(2.0, 3.0))
+          )
+        ),
+        id = "multiLineString1"
+      )
     )
     val bbox = features.flatMap { it.geometry?.getAllCoordinates().orEmpty() }.toBBox()
     val featureCollection = FeatureCollection(features, bbox = bbox)
@@ -117,16 +117,17 @@ class FeatureCollectionTest {
 
     val featureCollection = mapper.readValue(geojson, GeoJsonObject::class.java)
     val features = listOf(
-        Feature(geometry = Point(Position(0.0, 10.0)), id = "point1"),
-        Feature(geometry = Point(Position(0.0, 20.0)), id = "point2"),
-        Feature(
-            geometry = MultiLineString(
-                listOf(
-                    listOf(Position(0.0, 1.0), Position(1.0, 2.0)),
-                    listOf(Position(0.0, 1.0), Position(1.0, 2.0), Position(2.0, 3.0))
-                )
-            ),
-            id = "multiLineString1")
+      Feature(geometry = Point(Position(0.0, 10.0)), id = "point1"),
+      Feature(geometry = Point(Position(0.0, 20.0)), id = "point2"),
+      Feature(
+        geometry = MultiLineString(
+          listOf(
+            listOf(Position(0.0, 1.0), Position(1.0, 2.0)),
+            listOf(Position(0.0, 1.0), Position(1.0, 2.0), Position(2.0, 3.0))
+          )
+        ),
+        id = "multiLineString1"
+      )
     )
 
     val bbox = features.flatMap { it.geometry?.getAllCoordinates().orEmpty() }.toBBox()

@@ -1,8 +1,7 @@
 package io.jawg.geojson.serializer
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.BBox
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -10,7 +9,7 @@ import kotlin.test.assertFailsWith
 
 class BBoxDeserializerTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should deserialize to BBox with Double`() {
