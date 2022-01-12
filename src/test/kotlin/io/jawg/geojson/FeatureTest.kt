@@ -1,8 +1,7 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.jawg.geojson.utils.GeoJsonFactory
 import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.assertEquals
@@ -13,7 +12,7 @@ import kotlin.test.assertTrue
 
 class FeatureTest {
 
-  private val mapper = ObjectMapper().registerKotlinModule()
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should deserialize to Feature with id`() {

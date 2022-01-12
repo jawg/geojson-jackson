@@ -1,20 +1,19 @@
 package io.jawg.geojson.serializer
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.Position
 import org.junit.Test
 import kotlin.test.assertEquals
 
 class PositionSerializerTest {
 
-  private val mapper = ObjectMapper().registerKotlinModule()
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should serialize to (lng, lat)`() {
     val position = Position(
-        lng = 1.1,
-        lat = 2.2
+      lng = 1.1,
+      lat = 2.2
     )
 
     val geojson = mapper.writeValueAsString(position)
@@ -29,9 +28,9 @@ class PositionSerializerTest {
   @Test
   fun `it should serialize to (lng, lat, alt)`() {
     val position = Position(
-        lng = 1.1,
-        lat = 2.2,
-        alt = 3.3
+      lng = 1.1,
+      lat = 2.2,
+      alt = 3.3
     )
 
     val geojson = mapper.writeValueAsString(position)

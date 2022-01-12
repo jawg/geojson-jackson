@@ -1,16 +1,13 @@
-import org.jetbrains.kotlin.backend.common.onlyIf
-
 plugins {
-  maven
   `maven-publish`
   signing
-  kotlin("jvm") version "1.3.61"
+  kotlin("jvm")
 }
 
 description = "GeoJSON for Jackson"
 
 group = "io.jawg.geojson"
-version = "1.3.0-SNAPSHOT"
+version = "${property("version")}"
 
 val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
 
@@ -38,10 +35,6 @@ tasks {
       (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
   }
-}
-
-repositories {
-  mavenCentral()
 }
 
 publishing {
@@ -93,16 +86,15 @@ publishing {
 }
 
 signing {
-  onlyIf({ isReleaseVersion }) {
-    sign(publishing.publications["mavenJava"])
-  }
+  sign(publishing.publications["mavenJava"])
+}
+
+tasks.withType<Sign>().configureEach {
+  onlyIf { isReleaseVersion }
 }
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
-  implementation(kotlin("reflect"))
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.2")
-  testImplementation(kotlin("test"))
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${property("version.jackson")}")
   testImplementation(kotlin("test-junit"))
-  testImplementation("org.skyscreamer:jsonassert:1.5.0")
+  testImplementation("org.skyscreamer:jsonassert:${property("version.jsonassert")}")
 }

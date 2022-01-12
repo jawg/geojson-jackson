@@ -1,7 +1,6 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -10,7 +9,7 @@ import kotlin.test.assertFailsWith
 
 class PolygonTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should deserialize to Polygon no holes`() {
@@ -34,11 +33,11 @@ class PolygonTest {
   @Test
   fun `it should serialize to Polygon no holes`() {
     val ring = listOf(
-        Position(100.0, 0.0),
-        Position(101.0, 0.0),
-        Position(101.0, 1.0),
-        Position(100.0, 1.0),
-        Position(100.0, 0.0)
+      Position(100.0, 0.0),
+      Position(101.0, 0.0),
+      Position(101.0, 1.0),
+      Position(100.0, 1.0),
+      Position(100.0, 0.0)
     )
     val polygon = Polygon(listOf(ring))
 
@@ -52,18 +51,18 @@ class PolygonTest {
   @Test
   fun `it should serialize to Polygon with holes`() {
     val ring = listOf(
-        Position(100.0, 0.0),
-        Position(101.0, 0.0),
-        Position(101.0, 1.0),
-        Position(100.0, 1.0),
-        Position(100.0, 0.0)
+      Position(100.0, 0.0),
+      Position(101.0, 0.0),
+      Position(101.0, 1.0),
+      Position(100.0, 1.0),
+      Position(100.0, 0.0)
     )
     val hole = listOf(
-        Position(100.8, 0.8),
-        Position(100.8, 0.2),
-        Position(100.2, 0.2),
-        Position(100.2, 0.8),
-        Position(100.8, 0.8)
+      Position(100.8, 0.8),
+      Position(100.8, 0.2),
+      Position(100.2, 0.2),
+      Position(100.2, 0.8),
+      Position(100.8, 0.8)
     )
     val polygon = Polygon(listOf(ring, hole))
 
@@ -77,10 +76,10 @@ class PolygonTest {
   @Test
   fun `it should fail when linear ring is not closed`() {
     val unclosedRing = listOf(
-        Position(100.0, 0.0),
-        Position(101.0, 0.0),
-        Position(101.0, 1.0),
-        Position(100.0, 1.0)
+      Position(100.0, 0.0),
+      Position(101.0, 0.0),
+      Position(101.0, 1.0),
+      Position(100.0, 1.0)
     )
 
     assertFailsWith(IllegalArgumentException::class) {
@@ -92,9 +91,9 @@ class PolygonTest {
   @Test
   fun `it should fail when linear ring size is less than 4`() {
     val ring = listOf(
-        Position(100.0, 0.0),
-        Position(101.0, 0.0),
-        Position(100.0, 0.0)
+      Position(100.0, 0.0),
+      Position(101.0, 0.0),
+      Position(100.0, 0.0)
     )
 
     assertFailsWith(IllegalArgumentException::class) {

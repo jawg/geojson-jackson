@@ -1,7 +1,6 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.dsl.toBBox
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
@@ -10,7 +9,7 @@ import kotlin.test.assertTrue
 
 class PointTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should serialize to Point(lng, lat)`() {

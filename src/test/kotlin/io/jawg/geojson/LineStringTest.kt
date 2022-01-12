@@ -1,8 +1,6 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
-import io.jawg.geojson.utils.BBoxFactory
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
 import kotlin.test.assertEquals
@@ -11,15 +9,15 @@ import kotlin.test.assertTrue
 
 class LineStringTest {
 
-  private val mapper = ObjectMapper().registerModule(KotlinModule())
+  private val mapper = jacksonObjectMapper()
 
   @Test
   fun `it should serialize to LineString`() {
     val lineString = LineString(
-        coordinates = listOf(
-            Position(lng = 100.0, lat = 50.0),
-            Position(lng = 50.2, lat = 15.6)
-        )
+      coordinates = listOf(
+        Position(lng = 100.0, lat = 50.0),
+        Position(lng = 50.2, lat = 15.6)
+      )
     )
     val geojson = mapper.writeValueAsString(lineString)
 
@@ -43,10 +41,10 @@ class LineStringTest {
     """
     val lineString = mapper.readValue(geojson, GeoJsonObject::class.java)
     val expected = LineString(
-        coordinates = listOf(
-            Position(lng = 100.0, lat = 50.0),
-            Position(lng = 50.2, lat = 15.6)
-        )
+      coordinates = listOf(
+        Position(lng = 100.0, lat = 50.0),
+        Position(lng = 50.2, lat = 15.6)
+      )
     )
     assertTrue(lineString is LineString)
     assertEquals(expected.coordinates, lineString.coordinates)
