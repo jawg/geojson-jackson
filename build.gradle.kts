@@ -2,6 +2,7 @@ plugins {
   `maven-publish`
   signing
   kotlin("jvm")
+  id("com.github.ben-manes.versions")
 }
 
 description = "GeoJSON for Jackson"
@@ -11,20 +12,11 @@ version = "${property("version")}"
 
 val isReleaseVersion = !version.toString().endsWith("SNAPSHOT")
 
-java {
-  sourceCompatibility = JavaVersion.VERSION_1_8
-  targetCompatibility = JavaVersion.VERSION_1_8
+kotlin {
+  jvmToolchain(21)
 }
 
 tasks {
-  compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-  }
-
-  compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-  }
-
   java {
     withJavadocJar()
     withSourcesJar()
