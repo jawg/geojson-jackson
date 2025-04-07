@@ -1,3 +1,7 @@
+# 1.2.4 2025-04-07
+
+* chore: upgrade versions
+
 # 1.2.3 2024-06-24
 
 * chore: upgrade versions
