@@ -1,9 +1,9 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.jawg.geojson.serializer.BBoxDeserializer
 import io.jawg.geojson.serializer.BBoxSerializer
+import tools.jackson.databind.annotation.JsonDeserialize
+import tools.jackson.databind.annotation.JsonSerialize
 
 @JsonDeserialize(using = BBoxDeserializer::class)
 @JsonSerialize(using = BBoxSerializer::class)

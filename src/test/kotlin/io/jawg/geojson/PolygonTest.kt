@@ -1,6 +1,6 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import tools.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.assertEquals
 import org.junit.Test

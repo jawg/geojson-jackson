@@ -1,9 +1,9 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.jawg.geojson.serializer.PositionDeserializer
 import io.jawg.geojson.serializer.PositionSerializer
+import tools.jackson.databind.annotation.JsonDeserialize
+import tools.jackson.databind.annotation.JsonSerialize
 
 typealias PointCoordinates = Position
 typealias LineStringCoordinates = List<Position>

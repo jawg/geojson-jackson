@@ -1,0 +1,23 @@
+initscript {
+    repositories {
+        maven { url "https://plugins.gradle.org/m2" }
+    }
+    dependencies { classpath("org.openrewrite:plugin:latest.release") }
+}
+rootProject {
+    plugins.apply(org.openrewrite.gradle.RewritePlugin)
+    dependencies {
+        rewrite("org.openrewrite:rewrite-java")
+    }
+    rewrite {
+        activeRecipe("org.openrewrite.gradle.MigrateToGradle9")
+        setExportDatatables(true)
+    }
+    afterEvaluate {
+        if (repositories.isEmpty()) {
+            repositories {
+                mavenCentral()
+            }
+        }
+    }
+}
