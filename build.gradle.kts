@@ -1,4 +1,4 @@
-import com.vanniktech.maven.publish.SonatypeHost
+//import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
   kotlin("jvm")
@@ -15,41 +15,46 @@ kotlin {
   jvmToolchain(21)
 }
 
-mavenPublishing {
-  publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-  signAllPublications()
-
-  pom {
-    name.set("GeoJSON Jackson for Kotlin")
-    description.set("(De)Serialization of GeoJSON with Jackson for Kotlin")
-    url.set("https://github.com/jawg/geojson-jackson")
-    licenses {
-      license {
-        name.set("The Apache License, Version 2.0")
-        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-      }
-    }
-    organization {
-      name.set("Jawg")
-      url.set("https://jawg.io")
-    }
-    developers {
-      developer {
-        id.set("jawg")
-        name.set("Jawg")
-        email.set("contact@jawg.io")
-      }
-    }
-    scm {
-      connection.set("scm:git:git://git@github.com:jawg/geojson-jackson.git")
-      developerConnection.set("scm:git:ssh://git@github.com:jawg/geojson-jackson.git")
-      url.set("https://github.com/jawg/geojson-jackson")
-    }
-  }
-}
+//mavenPublishing {
+//  publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+//  signAllPublications()
+//
+//  pom {
+//    name.set("GeoJSON Jackson for Kotlin")
+//    description.set("(De)Serialization of GeoJSON with Jackson for Kotlin")
+//    url.set("https://github.com/jawg/geojson-jackson")
+//    licenses {
+//      license {
+//        name.set("The Apache License, Version 2.0")
+//        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+//      }
+//    }
+//    organization {
+//      name.set("Jawg")
+//      url.set("https://jawg.io")
+//    }
+//    developers {
+//      developer {
+//        id.set("jawg")
+//        name.set("Jawg")
+//        email.set("contact@jawg.io")
+//      }
+//      developer {
+//        id.set("russellhoff")
+//        name.set("Jon Inazio")
+//        email.set("captain06@gmail.com")
+//      }
+//    }
+//    scm {
+//      connection.set("scm:git:git://git@github.com:jawg/geojson-jackson.git")
+//      developerConnection.set("scm:git:ssh://git@github.com:jawg/geojson-jackson.git")
+//      url.set("https://github.com/jawg/geojson-jackson")
+//    }
+//  }
+//}
 
 dependencies {
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${property("version.jackson")}")
+  implementation("tools.jackson.module:jackson-module-kotlin:${property("version.jackson")}")
   testImplementation(kotlin("test-junit"))
   testImplementation("org.skyscreamer:jsonassert:${property("version.jsonassert")}")
 }
