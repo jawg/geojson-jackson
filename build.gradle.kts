@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 plugins {
   kotlin("jvm")
   id("com.github.ben-manes.versions")
@@ -16,7 +14,7 @@ kotlin {
 }
 
 mavenPublishing {
-  publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+  publishToMavenCentral()
   signAllPublications()
 
   pom {
