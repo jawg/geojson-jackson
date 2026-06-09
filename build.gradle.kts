@@ -10,7 +10,7 @@ group = "io.jawg.geojson"
 version = "${property("version")}"
 
 kotlin {
-  jvmToolchain(21)
+  jvmToolchain(25)
 }
 
 mavenPublishing {
@@ -24,7 +24,7 @@ mavenPublishing {
     licenses {
       license {
         name.set("The Apache License, Version 2.0")
-        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+        url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
       }
     }
     organization {
