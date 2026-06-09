@@ -1,0 +1,15 @@
+[versions]
+kotlin = "2.4.0"
+versions-plugin = "0.54.0"
+maven-publish-plugin = "0.36.0"
+jackson = "2.21.1"
+jsonassert = "1.5.3"
+
+[libraries]
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+jsonassert = { module = "org.skyscreamer:jsonassert", version.ref = "jsonassert" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ben-manes-versions = { id = "com.github.ben-manes.versions", version.ref = "versions-plugin" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish-plugin" }
