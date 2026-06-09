@@ -1,9 +1,9 @@
 package io.jawg.geojson.serializer
 
-import com.fasterxml.jackson.databind.exc.MismatchedInputException
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.Position
 import org.junit.Test
+import tools.jackson.databind.exc.MismatchedInputException
+import tools.jackson.module.kotlin.jacksonObjectMapper
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 

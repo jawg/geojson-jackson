@@ -1,9 +1,9 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
+import tools.jackson.module.kotlin.jacksonObjectMapper
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 

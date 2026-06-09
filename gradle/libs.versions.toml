@@ -2,11 +2,11 @@
 kotlin = "2.4.0"
 versions-plugin = "0.54.0"
 maven-publish-plugin = "0.36.0"
-jackson = "2.21.1"
+jackson = "3.2.0"
 jsonassert = "1.5.3"
 
 [libraries]
-jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
+jackson-module-kotlin = { module = "tools.jackson.module:jackson-module-kotlin", version.ref = "jackson" }
 jsonassert = { module = "org.skyscreamer:jsonassert", version.ref = "jsonassert" }
 
 [plugins]
