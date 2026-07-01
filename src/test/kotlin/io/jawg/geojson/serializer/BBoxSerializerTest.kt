@@ -1,9 +1,9 @@
 package io.jawg.geojson.serializer
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.BBox
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
+import tools.jackson.module.kotlin.jacksonObjectMapper
 
 class BBoxSerializerTest {
 

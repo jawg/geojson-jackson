@@ -1,3 +1,7 @@
+# 1.3.0 2026-07-01
+
+* feat: migrate to Jackson 3
+
 # 1.2.5 2026-06-09
 
 * chore: upgrade versions

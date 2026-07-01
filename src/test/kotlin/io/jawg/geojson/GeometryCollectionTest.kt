@@ -1,6 +1,5 @@
 package io.jawg.geojson
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.jawg.geojson.utils.GeoJsonFactory
 import io.jawg.geojson.utils.GeoJsonLoader
 import org.junit.Assert.assertEquals
@@ -8,6 +7,7 @@ import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.skyscreamer.jsonassert.JSONAssert
+import tools.jackson.module.kotlin.jacksonObjectMapper
 
 class GeometryCollectionTest {
 

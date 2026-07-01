@@ -1,7 +1,7 @@
 plugins {
-  kotlin("jvm")
-  id("com.github.ben-manes.versions")
-  id("com.vanniktech.maven.publish")
+  alias(libs.plugins.kotlin.jvm)
+  alias(libs.plugins.ben.manes.versions)
+  alias(libs.plugins.maven.publish)
 }
 
 description = "GeoJSON for Jackson"
@@ -47,7 +47,7 @@ mavenPublishing {
 }
 
 dependencies {
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${property("version.jackson")}")
+  implementation(libs.jackson.module.kotlin)
   testImplementation(kotlin("test-junit"))
-  testImplementation("org.skyscreamer:jsonassert:${property("version.jsonassert")}")
+  testImplementation(libs.jsonassert)
 }
