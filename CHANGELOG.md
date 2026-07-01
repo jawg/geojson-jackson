@@ -1,3 +1,5 @@
+# 1.4.0-SNAPSHOT
+
 # 1.3.0 2026-07-01
 
 * feat: migrate to Jackson 3
