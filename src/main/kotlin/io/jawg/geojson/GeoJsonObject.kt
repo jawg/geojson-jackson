@@ -1,6 +1,7 @@
 package io.jawg.geojson
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     JsonSubTypes.Type(FeatureCollection::class)
 )
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder(value = ["type"])
 abstract class GeoJsonObject(
     val type: String
 )

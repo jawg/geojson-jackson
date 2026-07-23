@@ -23,8 +23,8 @@ class LineStringTest {
 
     val expected = """
       {
-        "coordinates": [[100.0, 50.0], [50.2, 15.6]],
-        "type": "LineString"
+        "type": "LineString",
+        "coordinates": [[100.0, 50.0], [50.2, 15.6]]
       }
     """.replace("\\s".toRegex(), "")
 

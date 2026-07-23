@@ -1,5 +1,7 @@
 # 1.4.0-SNAPSHOT
 
+* fix: set type property first to improve compatibility 
+
 # 1.3.0 2026-07-01
 
 * feat: migrate to Jackson 3

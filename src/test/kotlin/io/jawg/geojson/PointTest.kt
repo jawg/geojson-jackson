@@ -18,8 +18,8 @@ class PointTest {
 
     val expected = """
       {
-        "coordinates": [100.0, 50.0],
-        "type": "Point"
+        "type": "Point",
+        "coordinates": [100.0, 50.0]
       }
     """.replace("\\s".toRegex(), "")
 
@@ -47,8 +47,8 @@ class PointTest {
 
     val expected = """
       {
-        "coordinates": [100.0, 50.0, 25.3],
-        "type": "Point"
+        "type": "Point",
+        "coordinates": [100.0, 50.0, 25.3]
       }
     """.replace("\\s".toRegex(), "")
 
