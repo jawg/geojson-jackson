@@ -22,8 +22,8 @@ class MultiPointTest {
 
     val expected = """
       {
-        "coordinates": [[100.0, 50.0], [50.2, 25.7]],
-        "type": "MultiPoint"
+        "type": "MultiPoint",
+        "coordinates": [[100.0, 50.0], [50.2, 25.7]]
       }
     """.replace("\\s".toRegex(), "")
 
