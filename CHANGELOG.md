@@ -1,3 +1,5 @@
+# 1.4.0-SNAPSHOT
+
 # 1.3.1 2026-10-22
 
 * fix: set type property first to improve compatibility 
